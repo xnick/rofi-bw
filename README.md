@@ -1,8 +1,8 @@
 # rofi-lpass
 
-:warning: **NOTE:** This repo is 100% unmaintained. I've switched from Laspass to BitWarden. Do not expect any updates or help to get this working.
+Adapted from [rofi-lpass](https://github.com/Mange/rofi-lpass)
 
-Custom script for Rofi that allows you to copy passwords from your Lastpass vault.
+Custom script for Rofi that allows you to copy passwords from your Bitwarden vault.
 
 ## Features
 
@@ -14,10 +14,13 @@ Custom script for Rofi that allows you to copy passwords from your Lastpass vaul
 
 ## Installation
 
-1. Make sure you have [lastpass-cli](https://github.com/lastpass/lastpass-cli) installed, with `lpass` on your `PATH`.
-2. Symlink the script to somewhere on your `$PATH`: `ln -s $(pwd)/rofi-lpass ~/bin/rofi-lpass`.
-3. Run rofi with this as a custom script: `rofi -modi lpass:rofi-lpass -show lpass`
+1. Make sure you have [bitwarden-cli](https://github.com/bitwarden/cli/) installed, with `bw` on your `PATH`.
+2. Since bw can't copy to clipboard by itself, `xclip` is also needed; should be available in your distro's repo.
+3. Symlink the script to somewhere on your `$PATH`: `ln -s $(pwd)/rofi-bw ~/bin/rofi-bw`.
+4. Run rofi with this as a custom script: `rofi -modi bw:rofi-bw -show bw`
 
 ## License
+rofi-lpass: Copyright © 2017 Magnus Bergmark. 
 
-Copyright © 2017 Magnus Bergmark. Code released under the MIT license.
+Code released under the MIT license.
+
