@@ -3,15 +3,15 @@ set -e
 set -o pipefail
 
 print-account-list() {
-  lpass ls --format "%/as%ag - %an (%au) [%ai]" 2>&1
+  bw list items | jq -r '.[] | (.name + " (" + .login.username+")"+" ["+.id+"]")' 2>&1
 }
 
 copy-account-field() {
-  lpass show --clip "--${2}" "$1" >/dev/null 2>/dev/null
+  bw get ${2} "$1" | xclip -r -selection clipboard > /dev/null 2>/dev/null
 }
 
 open-account-url() {
-  local url=$(lpass show --url "$1")
+  local url=$(bw get uri"$1")
   if [[ -n $url ]]; then
     xdg-open "$url" >/dev/null 2>/dev/null
   else
@@ -34,10 +34,10 @@ show-account-options() {
   echo ">> Copy password [$id]"
   echo ">> Copy username [$id]"
 
-  url=$(lpass show --url "$id")
+  url=$(bw get uri "$id")
   if is-actual-url "$url"; then
     echo ">> Open $url [$id]"
-    echo ">> Copy URL [$id]"
+    echo ">> Copy URI [$id]"
   fi
 
   echo ">> Copy ID [$id]"
@@ -52,7 +52,7 @@ is-entry-selected() {
 }
 
 id-in-selection() {
-  echo "$1" | grep -oE '\[[0-9]+\]$' | tr -d '[]'
+  echo "$1" | grep -oE '\[.+\]$' | tr -d '[]'
 }
 
 debug() {
@@ -71,7 +71,7 @@ if is-entry-selected "$1"; then
       '>> Copy username'*)
         copy-account-field "$id" username ;;
       '>> Copy URL'*)
-        copy-account-field "$id" url ;;
+        copy-account-field "$id" uri ;;
       '>> Copy ID'*)
         copy-account-field "$id" id ;;
       '>> Open'*)
