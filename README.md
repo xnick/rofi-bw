@@ -1,4 +1,4 @@
-# rofi-lpass
+# rofi-bw
 
 Adapted from [rofi-lpass](https://github.com/Mange/rofi-lpass)
 
